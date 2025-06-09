@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, request, send_file
 import yt_dlp
 import uuid
 import os
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return send_file("index.html")
 
 @app.route('/baixar', methods=['POST'])
 def baixar():
@@ -16,7 +16,7 @@ def baixar():
         return "URL inválida", 400
 
     video_id = str(uuid.uuid4())
-    output_path = f"/tmp/{video_id}.mp4"  # /tmp é obrigatório no Railway free tier
+    output_path = f"/tmp/{video_id}.mp4"  # Diretório compatível com Railway
 
     ydl_opts = {
         'format': 'best',
